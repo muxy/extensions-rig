@@ -1,0 +1,6 @@
+{
+  "viewer_path": "viewer.html",
+  "config_path": "config.html",
+  "live_config_path": "live.html",
+  "panel_height": 100
+}

@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+
+    <script type="text/javascript">
+      Muxy.testJWTRole = 'broadcaster'; // Necessary here to fake broadcaster access to the Muxy API. In production, the role will be set automatically in the broadcaster views.
+
+      Muxy.setup({ extensionID: '1ssqhiy6xaoyisxbtvkiusxtjzkof2' });
+      const sdk = new Muxy.SDK();
+
+      var firstFetchTime;
+
+      const updateCount = _.debounce(function () {
+        // We'll be counting the number of accumulations since the initial fetch
+        if (!firstFetchTime) {
+          firstFetchTime = new Date();
+          document.querySelector('#fetchTime').innerText = firstFetchTime;
+        }
+
+        sdk.getAccumulation('simple_counter', firstFetchTime.getTime()).then(function (results) {
+          const counter = document.querySelector('#counter');
+
+          // The number of objects in the result data is our counter value
+          counter.innerText = results.data.length;
+        });
+      }, 1000);
+
+      // Retrieve accumulated data on an interval
+      setInterval(updateCount, 2000);
+    </script>
+  </head>
+
+  <body>
+    <p>Number of times Increment has been pressed since <span id="fetchTime"></span>:</p>
+
+    <span id="counter">0</span>
+  </body>
+</html>
