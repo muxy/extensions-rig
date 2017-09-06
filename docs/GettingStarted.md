@@ -10,8 +10,8 @@ We recommend the current LTS release for your OS:
 
 ## Getting the rig and dependencies
 ```bash
-git clone https://github.com/muxy/muxy-extension-rig
-cd ./muxy-extension-rig
+git clone https://github.com/muxy/extensions-rig
+cd ./extensions-rig
 npm install
 ```
 
