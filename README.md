@@ -10,15 +10,18 @@ See also:
 
 [Overlay App Rig](https://github.com/muxy/overlay-app-rig)
 
-##Overview
+## Overview
 
 The Rig simulates the Twitch environment that extension run in. Combined with the Muxy SDK it allows extensions to
 safely be sandboxed away from production data and any hiccups that can happen on Twitch's site. When running in the rig 
 the Muxy SDK also provides a pubsub system that works exactly like the production one on Twitch.
 
 ## Managing Twitch Extension Secrets
-Before you can use the Muxy Extension SDK you will have to create a new extension on [https://vulcan.curseforge.com](https://vulcan.curseforge.com).
-Once you have done that take the Extension id and secret and submit them to [https://u.muxy.io/developers](https://u.muxy.io/developers) 
+Before you can use the Muxy Extension SDK you will have to create a new extension on
+[https://dev.twitch.tv](https://dev.twitch.tv).
+
+Once you have done that take the Client ID from Overview and Secret from the Settings section and submit them to
+[https://u.muxy.io/dashboard/developers](https://u.muxy.io/dashboard/developers).
 This will allow the automatic sandbox credentials to work for your extension.
 
 ## Software Requirements

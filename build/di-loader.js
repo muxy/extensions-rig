@@ -16,7 +16,7 @@ module.exports = function directInjection(content) {
       this.addDependency(path.resolve(__dirname, manifestFile));
 
       const manifestObj = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
-      manifestObj._rig_id = path.posix.basename(appDir);
+      manifestObj._rig_id = path.basename(appDir);
       apps.push(manifestObj);
     } catch (err) {
       console.error(err);

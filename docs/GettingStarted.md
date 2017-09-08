@@ -16,9 +16,9 @@ npm install
 ```
 
 ## Register a new Extension on Twitch
-*  Visit [https://vulcan.curseforge.com](https://vulcan.curseforge.com) and create a new extension. Make a note of the 
-Extension ID and Secret that get generated.
-*  Visit [https://u.muxy.io/developers](https://u.muxy.io/developers) and submit the ID and Secret from the last step to enable the 
+*  Visit [https://dev.twitch.tv](https://dev.twitch.tv) and create a new extension. Make a note of the 
+Client ID and Secret that get generated.
+*  Visit [https://u.muxy.io/dashboard/developers](https://u.muxy.io/dashboard/developers) and submit the Client ID and Secret from the last step to enable the 
 Muxy Extension SDK for your Extension.
 
 ## Create the Extension 
