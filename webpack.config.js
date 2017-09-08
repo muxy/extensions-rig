@@ -138,12 +138,6 @@ module.exports = {
         exclude: /node_modules|libs/,
         use: [
           {
-            loader: 'eslint-loader',
-            options: {
-              formatter: require('eslint-friendly-formatter')
-            }
-          },
-          {
             loader: 'di-loader',
             options: { apps }
           }

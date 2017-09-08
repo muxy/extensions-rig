@@ -1,11 +1,10 @@
 {
   "name": "muxy-extensions-rig",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A full development environment to build Twitch panel extensions.",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "./node_modules/webpack/bin/webpack.js --config webpack.config.js"
+    "dev": "webpack-dev-server"
   },
   "keywords": [],
   "author": "Muxy, Inc.",
