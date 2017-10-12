@@ -1,0 +1,48 @@
+<html>
+<head>
+  <style>
+    @import url('//fonts.googleapis.com/css?family=Roboto');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+  </style>
+  <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+</head>
+
+<body>
+    <label>
+      Auth Code
+      <br/>
+      <input id="code" type="text">
+    </label>
+    <br/>
+    <input id="validate" type="button" value="Validate">
+    <br/>
+    <span id="status"></span>
+  </body>
+
+  <script type="text/javascript">
+    /* global Muxy */
+
+    Muxy.testJWTRole = 'broadcaster';
+
+    Muxy.setup({ extensionID: '1ssqhiy6xaoyisxbtvkiusxtjzkof2' });
+    const sdk = new Muxy.SDK();
+
+    document.getElementById('validate').addEventListener('click', () => {
+      const codeEl = document.getElementById('code');
+      const statusEl = document.getElementById('status');
+      sdk.validateCode(codeEl.value)
+        .then(() => {
+          statusEl.innerHTML = 'Token successfully validated';
+        })
+        .catch(() => {
+          statusEl.innerHTML = 'Token could not be validated, please try again.';
+        });
+    });
+  </script>
+</html>
