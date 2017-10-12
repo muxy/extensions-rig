@@ -1,0 +1,58 @@
+<html>
+<head>
+  <style>
+    @import url('//fonts.googleapis.com/css?family=Roboto');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .background {
+      background-color: #9da6a8;
+      position: relative;
+    }
+
+    .foreground {
+      background-color: #2595f3;
+      display: flex;
+      justify-content: center;
+      height: 5px;
+      transition: width 0.5s;
+      width: 0%;
+    }
+  </style>
+  <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+</head>
+
+<body>
+  CPU
+  <div class="background">
+    <div id="CPU" class="foreground"></div>
+  </div>
+
+  RAM
+  <div class="background">
+    <div id="RAM" class="foreground"></div>
+  </div>
+
+  <script type="text/javascript">
+    /* global Muxy */
+    const cpuEl = document.getElementById('CPU');
+    const ramEl = document.getElementById('RAM');
+
+    Muxy.setup({extensionID: '1ssqhiy6xaoyisxbtvkiusxtjzkof2'});
+    const sdk = new Muxy.SDK();
+
+    sdk.loaded().then(() => {
+      sdk.listen('json_store_update:hardware_stats', (data) => {
+        setTimeout(() => { // Timeout allows for viewer latency to synchronize stats and video
+          cpuEl.style.width = data.value.CPU + '%';
+          ramEl.style.width = data.value.RAM + '%';
+        }, (sdk.user.latency || 0) * 1000);
+      });
+    });
+  </script>
+</body>
+</html>

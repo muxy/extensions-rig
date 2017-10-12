@@ -2,15 +2,17 @@
   <head>
     <style>
       @import url('//fonts.googleapis.com/css?family=Roboto');
-
-      body {
-        font-family: 'Roboto', sans-serif;
-      }
-
+      body { font-family: 'Roboto', sans-serif; }
     </style>
+
     <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+  </head>
+
+  <body>
+    <h3>Message of the Day</h3>
+    <p id="motd"></p>
 
     <script type="text/javascript">
       Muxy.setup({ extensionID: '1ssqhiy6xaoyisxbtvkiusxtjzkof2' });
@@ -22,10 +24,5 @@
         });
       });
     </script>
-  </head>
-
-  <body>
-    <h3>Message of the Day</h3>
-    <p id="motd"></p>
   </body>
 </html>

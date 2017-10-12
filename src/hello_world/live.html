@@ -3,6 +3,13 @@
     <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+  </head>
+
+  <body>
+    <textarea id="motd">Hello, world!</textarea>
+    <p>
+      <button id="set-motd">Set MOTD</button>
+    </p>
 
     <script type="text/javascript">
       Muxy.testJWTRole = 'broadcaster'; // Necessary here to fake broadcaster access to the Muxy API. In production, the role will be set automatically in the broadcaster views.
@@ -16,13 +23,8 @@
           sdk.send('motd', { motd: motd });
         });
       }
-    </script>
-  </head>
 
-  <body>
-    <textarea id="motd">Hello, world!</textarea>
-    <p>
-      <button onclick="changeMotd()">Set MOTD</button>
-    </p>
+      document.querySelector('#set-motd').addEventListener('click', changeMotd);
+    </script>
   </body>
 </html>

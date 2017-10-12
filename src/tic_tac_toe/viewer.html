@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      //----------------------------
+      // Set this to your testing Twitch Channel ID before running:
+      window.CHANNEL_ID = '';
+      //----------------------------
+    </script>
+
+    <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+
+    <style>
+      h3 { text-align: center; }
+      .game-ui { display: none; }
+      table { margin: 0 auto; }
+      a {
+        border: 1px solid grey;
+        color: white;
+        display: block;
+        height: 20px;
+        line-height: 20px;
+        width: 20px;
+        text-align: center;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h3>Tic Tac Toe</h3>
+    <div class="game-ui">
+      <table>
+        <tr>
+          <td><a id="1" onclick="vote(1)" href="javascript:;">1</a></td>
+          <td><a id="2" onclick="vote(2)" href="javascript:;">2</a></td>
+          <td><a id="3" onclick="vote(3)" href="javascript:;">3</a></td>
+        </tr>
+        <tr>
+          <td><a id="4" onclick="vote(4)" href="javascript:;">4</a></td>
+          <td><a id="5" onclick="vote(5)" href="javascript:;">5</a></td>
+          <td><a id="6" onclick="vote(6)" href="javascript:;">6</a></td>
+        </tr>
+        <tr>
+          <td><a id="7" onclick="vote(7)" href="javascript:;">7</a></td>
+          <td><a id="8" onclick="vote(8)" href="javascript:;">8</a></td>
+          <td><a id="9" onclick="vote(9)" href="javascript:;">9</a></td>
+        </tr>
+      </table>
+    </div>
+    <h4 id="warn">Voting is disabled right now, wait.</h4>
+
+    <script>
+      if (!window.CHANNEL_ID) {
+        document.querySelector("#warn").innerText = "You must add your channel ID to the viewer.html file";
+      } else {
+        // Basic state setup
+        Muxy.testChannelID = window.CHANNEL_ID;
+        Muxy.setup({ extensionID: '1ssqhiy6xaoyisxbtvkiusxtjzkof2' });
+        const sdk = new Muxy.SDK();
+
+        // Generally good practice to not let users spam the API by
+        // abusing the UI
+        vote = _.throttle(function(val) {
+          sdk.accumulate('move', {
+            value: val
+          });
+        }, 500);
+
+        // Game state display
+        function glyph(val) {
+          if (val === 1) { return "X"; }
+          if (val === -1) { return "O"; }
+          return "";
+        }
+        function color(val) {
+          if (val === 1) { return "#2196f3"; }
+          if (val === -1) { return "#4b367c"; }
+          return "white";
+        }
+
+        function render(state) {
+          if (state.player === 1) {
+            document.getElementById("warn").innerText = "Broadcaster's turn...";
+          } else {
+            document.getElementById("warn").innerText = "Twitch's turn!";
+          }
+
+          for (var i = 0; i < 9; ++i) {
+            const val = state.board[i];
+            document.getElementById("" + (i+1)).innerText = glyph(val);
+            document.getElementById("" + (i+1)).style.backgroundColor = color(val);
+          }
+
+          if (state.message) {
+            document.getElementById("warn").innerText = state.message;
+          }
+        };
+
+        sdk.loaded().then(() => {
+          // Initial load of state so that latecomers to the stream
+          // don't have to wait for an action to get the state of the game.
+          sdk.getAllState().then(function(state) {
+            render(state.channel);
+            document.querySelector(".game-ui").style.display = "block";
+          });
+
+          // Listen on different events
+          sdk.listen('make_choice', function(msg) {
+            // make_choice doesn't have state, so query the state here.
+            sdk.getAllState().then(function(state) {
+              render(state.channel);
+            });
+          });
+
+          // Render requests a render of state
+          sdk.listen('render', function(msg) {
+            render(msg);
+          });
+
+          // Same with the winner message.
+          sdk.listen('winner', function(msg) {
+            render(msg);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -3,6 +3,12 @@
     <!-- A real extension would not be able to link to external CDNs; we just do it here for simplicity -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="//ext-cdn.muxy.io/muxy-extensions-js/latest/muxy-extensions.js"></script>
+  </head>
+
+  <body>
+    <p>Pressing 'Increment' will send an accumulation request.</p>
+
+    <button id="increment">Increment</button>
 
     <script type="text/javascript">
       Muxy.setup({ extensionID: '1ssqhiy6xaoyisxbtvkiusxtjzkof2' });
@@ -11,12 +17,8 @@
       const increment = _.debounce(function () {
         sdk.accumulate('simple_counter', {}); // We're not sending any actual data in our accumulated objects - we're just going to count the number of objects that have accumulated
       }, 250);
+
+      document.querySelector('#increment').addEventListener('click', increment);
     </script>
-  </head>
-
-  <body>
-    <p>Pressing 'Increment' will send an accumulation request.</p>
-
-    <button onclick="increment()">Increment</button>
   </body>
 </html>
